@@ -16,3 +16,19 @@ bin-release/
 # Project files, i.e. `.project`, `.actionScriptProperties` and `.flexProperties`
 # should NOT be excluded as they contain compiler settings and other important
 # information for Eclipse / Flash Builder.
+/Freentship_Admin/node_modules/
+/Freentship_Admin/.expo/
+/Freentship_Admin/dist/
+/Freentship_Admin/npm-debug.*
+/Freentship_Admin/*.jks
+/Freentship_Admin/*.p8
+/Freentship_Admin/*.p12
+/Freentship_Admin/*.key
+/Freentship_Admin/*.mobileprovision
+/Freentship_Admin/*.orig.*
+/Freentship_Admin/web-build/
+package-lock.json
+/Freentship_Admin/yarn.lock
+# macOS
+/Freentship_Admin/.DS_Store
+/Freentship_Admin/.expo-shared
