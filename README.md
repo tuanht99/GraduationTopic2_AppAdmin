@@ -1,2 +1,2 @@
 # GraduationTopic2_AppAdmin
-This is the second app in our Freentship system.
+This app's responsibility is to manage all the object in Freentship network such as users, food stores, shippers, etc.
