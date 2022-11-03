@@ -8,24 +8,17 @@ import {
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import Header from "../../components/Layout/components/Header";
-import { db } from "../../services/firebase";
-import { collection, getDocs } from "firebase/firestore";
+import { GetStores, GetDetailStore } from "../../services";
 
 const Stores = ({ navigation }) => {
   const [stores, setStores] = useState([]);
-  console.log("stores", stores);
+ 
   useEffect(() => {
-    const getStores = async () => {
-      const stores = [];
-      const querySnapshot = await getDocs(collection(db, "food_stores"));
-      querySnapshot.forEach((doc) => {
-        // doc.data() is never undefined for query doc snapshotsa
-        stores.push({ id: doc.id, ...doc.data() });
-        console.log(doc.id, " => ", doc.data());
-      });
-      setStores(stores);
-    };
-    getStores();
+    GetStores()
+      .then((data) => {
+        setStores(data);
+      })
+      .catch((err) => console.log("error =>", err));
   }, []);
 
   return (
@@ -41,7 +34,8 @@ const Stores = ({ navigation }) => {
             <TouchableOpacity
               key={index}
               style={styles.buttonStyle}
-              onPress={() => navigation.navigate("DetailStore")}
+              onPress={() => navigation.navigate("DetailStore" , {id : item.id})}
+      
             >
               <View
                 style={{
