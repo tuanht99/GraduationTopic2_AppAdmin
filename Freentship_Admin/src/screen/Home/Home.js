@@ -9,12 +9,12 @@ const Home = () => {
     seconds: 1562524200
   }
   
-  console.log(new Date(timestamp.seconds*1000))
+ const a = new Date(timestamp.seconds*1000)
 
   return (
     <View>
       <Header/>
-      <Text>Home</Text>
+      <Text>{a.toLocaleString()}</Text>
     </View>
   )
 }

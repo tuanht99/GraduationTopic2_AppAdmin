@@ -35,7 +35,7 @@ export async function GetDetailStore(id) {
 export async function GetAllOrder(idStore) {
   const allOrder = [];
   const orderRef = collection(db, "orders");
-  const q = query( orderRef , where("food_store_id", "==", `${idStore}`));
+  const q = query( orderRef , where("food_store_id", "==", `${idStore}`) , where("status", "==", 3) );
   const querySnapshot = await getDocs(q);
   querySnapshot.forEach((docRef) => {
     allOrder.push({ ...docRef.data() });

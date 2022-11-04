@@ -29,7 +29,7 @@ function DetailStore({ route }) {
   const [order, setOrder] = useState([]);
   const [totalPrice, setTotalPrice] = useState([]);
   const [totalRevenue, setTotalRevenue] = useState(0);
-
+  console.log(order)
   
   useEffect(() => {
     GetDetailStore(id)
@@ -58,7 +58,7 @@ function DetailStore({ route }) {
     
     <View key={id}>
     
-      {console.log("totalPrice", new Date(store.created.seconds*1000 + store.created.nanoseconds / 1000000))}
+      {/* {console.log("totalPrice", new Date(store.created.seconds*1000 + store.created.nanoseconds / 1000000))} */}
       <View>
         <Image
           style={styles.imgStore}
@@ -88,7 +88,7 @@ function DetailStore({ route }) {
         <Text style={styles.nameStore}>{store.name}</Text>
         <Text style={styles.phoneStore}>{store.address}</Text>
         {/* <Text style={styles.phoneStore}>{store.created.toDate()}</Text> */}
-        <Text style={styles.phoneStore}>Ngày bán hàng : {new Date(store.created.seconds * 1000).toString()}</Text>
+        <Text style={styles.phoneStore}>Ngày bán hàng : {new Date(store.created.seconds * 1000).toLocaleString()}</Text>
         <View style={styles.viewPhone}>
           <Text style={styles.phoneStore}>Phone : {store.phone}</Text>
          
