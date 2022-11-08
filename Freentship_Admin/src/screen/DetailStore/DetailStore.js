@@ -6,31 +6,27 @@ import {
   Image,
   Dimensions,
   StyleSheet,
+  TextInput,
 } from "react-native";
-
+import { FontAwesome5 } from "@expo/vector-icons";
 import call from "react-native-phone-call";
 import { Entypo } from "@expo/vector-icons";
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
-import { TabView, SceneMap, TabBar } from "react-native-tab-view";
+
+import formatCash from "../../components/FormatCash";
 import { GetDetailStore, GetAllOrder } from "../../services";
 
-const FirstRoute = () => (
-  <View style={[styles.scene, { backgroundColor: "#ff4081" }]} />
-);
-
-const SecondRoute = () => (
-  <View style={[styles.scene, { backgroundColor: "#673ab7" }]} />
-);
-
-function DetailStore({ route }) {
+function DetailStore({ navigation, route }) {
   const { id } = route.params;
   const [store, setStore] = useState([]);
   const [order, setOrder] = useState([]);
   const [totalPrice, setTotalPrice] = useState([]);
   const [totalRevenue, setTotalRevenue] = useState(0);
-  console.log(order)
-  
+  const [amountPaidToAdmin, setAmountPaidToAdmin] = useState(0);
+
+  // console.log("order", totalRevenueByDate);
+  // console.log("orderByDate", orderByDate);
   useEffect(() => {
     GetDetailStore(id)
       .then((data) => {
@@ -50,14 +46,15 @@ function DetailStore({ route }) {
   useEffect(() => {
     if (totalPrice.length > 0) {
       setTotalRevenue(totalPrice.reduce(myFunc));
+      setAmountPaidToAdmin(totalPrice.reduce(myFunc) *10 / 100);
     }
   }, [totalPrice]);
 
+  function myFunc(total, num) {
+    return total + num;
+  }
   const StoreInfo = ({ store }) => (
-    
-    
     <View key={id}>
-    
       {/* {console.log("totalPrice", new Date(store.created.seconds*1000 + store.created.nanoseconds / 1000000))} */}
       <View>
         <Image
@@ -88,10 +85,13 @@ function DetailStore({ route }) {
         <Text style={styles.nameStore}>{store.name}</Text>
         <Text style={styles.phoneStore}>{store.address}</Text>
         {/* <Text style={styles.phoneStore}>{store.created.toDate()}</Text> */}
-        <Text style={styles.phoneStore}>Ngày bán hàng : {new Date(store.created.seconds * 1000).toLocaleString()}</Text>
+        <Text style={styles.phoneStore}>
+          Ngày bán hàng :{" "}
+          {new Date(store.created.seconds * 1000).toLocaleString()}
+        </Text>
         <View style={styles.viewPhone}>
           <Text style={styles.phoneStore}>Phone : {store.phone}</Text>
-         
+
           <TouchableOpacity
             style={[styles.phoneCallBtn, styles.phoneStore]}
             onPress={() => call({ number: store.phone + "", prompt: false })}
@@ -109,10 +109,6 @@ function DetailStore({ route }) {
     </View>
   );
 
-  function myFunc(total, num) {
-    return total + num;
-  }
-
   const initialLayout = { width: Dimensions.get("window").width };
 
   return store.map((store, index) => {
@@ -123,8 +119,22 @@ function DetailStore({ route }) {
           Tổng đơn hàng đã bán : {order.length} đơn hàng
         </Text>
         <Text style={[styles.phoneStore, styles.infoStore]}>
-          Tổng doanh thu : {totalRevenue} vnd
+          Tổng doanh thu : {formatCash(totalRevenue + "")} vnd
         </Text>
+
+        <Text style={[styles.phoneStore, styles.infoStore]}>
+          Tiền mà cửa hàng phải trả  : {formatCash(amountPaidToAdmin + "")} vnd
+        </Text>
+
+        <TouchableOpacity
+          style={styles.btnRevenueByDate}
+          onPress={() => navigation.navigate("Revenue", { order: order })}
+        >
+          <Text style={{ color: "#fff", fontWeight: "bold", marginRight: 20 }}>
+            Xem doanh thu theo ngày
+          </Text>
+          <FontAwesome5 name="chevron-circle-right" size={21} color="#fff" />
+        </TouchableOpacity>
       </View>
     );
   });
@@ -159,5 +169,16 @@ const styles = StyleSheet.create({
     backgroundColor: "#E94730",
     borderRadius: 10,
     padding: 3,
+  },
+  btnRevenueByDate: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#00CCFF",
+    width: "auto",
+    borderRadius: 20,
+    marginHorizontal: 50,
+    height: 40,
+    marginTop : 50
   },
 });
