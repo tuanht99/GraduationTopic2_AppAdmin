@@ -4,10 +4,10 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 
 const Tab = createMaterialBottomTabNavigator();
-import { Home } from "../screen/Home";
-import { Shippers } from "../screen/Shipper";
-import { Stores } from "../screen/Stores";
-import Notification from "../screen/Notiification/Notification";
+import { Home } from "../screens/Home";
+import { Shippers } from "../screens/Shipper";
+import { Stores } from "../screens/Stores";
+import Notification from "../screens/Notiification/Notification";
 
 export default function BottomTab() {
   return (
