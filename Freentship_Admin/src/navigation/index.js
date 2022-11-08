@@ -2,10 +2,10 @@ import React from "react";
 import { View, Text } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Home } from "../screen/Home";
-import { Shippers } from "../screen/Shipper";
-import { DetailStore } from "../screen/DetailStore";
-import Revenue from "../screen/Revenue"
+import { Home } from "../screens/Home";
+import { Shippers } from "../screens/Shipper";
+import { DetailStore } from "../screens/DetailStore";
+import Revenue from "../screens/Revenue"
 import BottomTab from "./BottomTab";
 const Stack = createNativeStackNavigator();
 
