@@ -87,15 +87,7 @@ export function ConfirmOTP({ navigation, route }) {
             showMessage({ text: 'Phone authentication successful 👍' })
             navigation.navigate(
               'Home',
-            //   {
-            //       guestname,
-            //       avatar,
-            //       date,
-            //       sex,
-            //       id,
-            //       gmail,
-            //       phone
-            //     }
+           
              )
           } catch (err) {
             showMessage({ text: `Error: ${err.message}`, color: 'red' })
