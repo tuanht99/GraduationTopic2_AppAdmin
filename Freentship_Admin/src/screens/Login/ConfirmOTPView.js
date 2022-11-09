@@ -52,6 +52,7 @@ export function ConfirmOTP({ navigation, route }) {
       })
     } catch (err) {
       showMessage({ text: `Error: ${err.message}`, color: 'red' })
+      navigation.goBack();
     }
   }
 

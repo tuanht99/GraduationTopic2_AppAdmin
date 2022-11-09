@@ -7,7 +7,7 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import LoginView from '../screens/Login/LoginView';
 import { ConfirmOTP } from '../screens/Login/ConfirmOTPView'
-
+import ManagerAdmin from '../screens/ManagerAdminView'
 export default function Router() {
 const Stack = createNativeStackNavigator()
 
@@ -23,7 +23,7 @@ const Stack = createNativeStackNavigator()
             component={LoginView}
           />
          <Stack.Screen name="ConfirmOTP" component={ConfirmOTP} />
-         
+         <Stack.Screen name="Home" component={ManagerAdmin} />
         </Stack.Navigator>
       </NavigationContainer>
      
