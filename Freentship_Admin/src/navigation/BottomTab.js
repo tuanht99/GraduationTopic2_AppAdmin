@@ -4,7 +4,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 
 const Tab = createMaterialBottomTabNavigator();
-import { Home } from "../screens/Home";
+import  Home  from "../screens/Home/Home";
 import { Shippers } from "../screens/Shipper";
 import { Stores } from "../screens/Stores";
 import Notification from "../screens/Notiification/Notification";

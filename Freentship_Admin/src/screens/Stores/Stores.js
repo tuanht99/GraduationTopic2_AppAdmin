@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import Header from "../../components/Layout/components/Header";
-import { GetStores, GetDetailStore } from "../../services";
+import { GetStores } from "../../services";
 
 const Stores = ({ navigation }) => {
   const [stores, setStores] = useState([]);
