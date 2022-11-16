@@ -23,7 +23,11 @@ const Stack = createNativeStackNavigator()
             component={LoginView}
           />
          <Stack.Screen name="ConfirmOTP" component={ConfirmOTP} />
-         <Stack.Screen name="Home" component={ManagerAdmin} />
+         <Stack.Screen 
+            options={{
+              // hidden navbar
+              headerShown: false,
+            }} name="Home" component={ManagerAdmin} />
         </Stack.Navigator>
       </NavigationContainer>
      
