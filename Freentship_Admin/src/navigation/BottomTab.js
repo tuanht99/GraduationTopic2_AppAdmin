@@ -2,13 +2,16 @@ import { createMaterialBottomTabNavigator } from "@react-navigation/material-bot
 import { NavigationContainer } from "@react-navigation/native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
-
+import TabNavigator from "./TabNavigator";
 const Tab = createMaterialBottomTabNavigator();
 import  Home  from "../screens/Home/Home";
-import { Shippers } from "../screens/Shipper";
+// import { Shippers } from "../screens/Shipper";
+import Shipper from "../screens/ManagerUser/Shipper";
+import  Storez  from "../screens/ManagerUser/Stores";
+import KhachHang from "../screens/ManagerUser/KhachHang"
 import { Stores } from "../screens/Stores";
 import Notification from "../screens/Notiification/Notification";
-
+import ManagerAdminView from "../screens/Notiification/ManagerAdminView";
 export default function BottomTab() {
   return (
     <Tab.Navigator 
@@ -37,8 +40,8 @@ export default function BottomTab() {
         }}
       />
       <Tab.Screen
-        name="Shippers"
-        component={Shippers} // Search Screen
+        name="ManagerUser"
+        component={ManagerAdminView} // Search Screen
         options={{
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons
@@ -62,6 +65,7 @@ export default function BottomTab() {
           ),
         }}
       />
+     
     </Tab.Navigator>
   );
 }
