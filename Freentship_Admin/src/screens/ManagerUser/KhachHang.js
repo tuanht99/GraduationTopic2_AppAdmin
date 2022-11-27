@@ -1,4 +1,4 @@
-import { View, Text,FlatList ,StyleSheet,TouchableOpacity} from 'react-native'
+import { View, Text,FlatList ,StyleSheet,TouchableOpacity, Image,} from 'react-native'
 import React from 'react'
 import { GetListUser } from "../../services";
 import { useState, useEffect } from "react";
@@ -15,7 +15,6 @@ useEffect(() => {
     })
     .catch((err) => console.log("error =>", err));
 }, []);
-console.log(ListUser);
 
 const Item = ({ item }) => (
   

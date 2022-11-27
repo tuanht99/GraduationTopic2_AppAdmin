@@ -31,7 +31,7 @@ export async function GetDetailUser(id) {
   } else {
     console.log("No such document!");
   }
-  return store;
+  return Users;
 }
 export  async function GetListUserShipper() {
   const ListUser = [];
@@ -52,5 +52,5 @@ export async function GetDetailUserShipper(id) {
   } else {
     console.log("No such document!");
   }
-  return store;
+  return Users;
 }
