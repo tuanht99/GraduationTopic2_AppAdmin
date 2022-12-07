@@ -1,27 +1,57 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, TouchableWithoutFeedback } from "react-native";
 import React, { useState, useEffect } from "react";
+import Calendar from "../../components/Calendar";
+import { GetDetailStore, GetAllOrder } from "../../services";
 import formatCash from "../../components/FormatCash";
-import { TextInput } from "react-native-paper";
 
-function Revenue({ route }) {
-  const { order } = route.params;
+const Revenue = ({ route }) => {
+  const { orderInfo } = route.params;
+
   const [orderByDate, setOrderByDate] = useState([]);
-  const [totalRevenueByDate, setTotalRevenueByDate] = useState(0);
-  const [dateValueStart, setDateValueStart] = useState("2022-11-06");
-  const [dateValueEnd, setDateValueEnd] = useState("2022-11-07");
+  const [totalRevenue, setTotalRevenue] = useState(0);
+  const [selectedDate, setSelectedDate] = useState({});
+  const [allOrderByDate, setAllOrderByDate] = useState([]);
+  const [type, setType] = useState({});
+  const [amountPaidToAdmin, setAmountPaidToAdmin] = useState(0);
+
+  console.log('selectedDate' , orderInfo)
+  const callback = (payload, type) => {
+    setSelectedDate(payload);
+    setType(type);
+  };
 
   // get total amount from date to date...
   const getOrderByDate = () => {
-    const start = new Date(dateValueStart + "T00:00:00.000Z");
-    const end = new Date(dateValueEnd + "T23:59:59.000Z");
+    let start = "";
+    let end = "";
+    if (type) {
+      start = new Date(selectedDate + "T00:00:00.000Z");
+      end = new Date(selectedDate + "T23:59:59.000Z");
+    } else {
+      const date1 = new Date(selectedDate);
+      // first day of the month
+      start = new Date(date1.getFullYear(), date1.getMonth(), 1);
+      // last day of the month
+      end = new Date(date1.getFullYear(), date1.getMonth() + 1, 0);
+    }
+
     const secondsStart = Math.round(start.getTime() / 1000);
     const secondsEnd = Math.round(end.getTime() / 1000);
 
-    if (order.length > 0) {
+    if (orderInfo.length > 0) {
       setOrderByDate([]);
-      order.map((i) => {
-        if (i.orderDate >= secondsStart && i.orderDate <= secondsEnd) {
+      setAllOrderByDate([]);
+      orderInfo.map((i) => {
+        if (
+          i.orderDate >= secondsStart &&
+          i.orderDate <= secondsEnd &&
+          i.status === 5
+        ) {
           setOrderByDate((prev) => [...prev, i.total_food]);
+        }
+
+        if (i.orderDate >= secondsStart && i.orderDate <= secondsEnd) {
+          setAllOrderByDate((prev) => [...prev, i.total_food]);
         }
       });
     }
@@ -29,14 +59,15 @@ function Revenue({ route }) {
 
   useEffect(() => {
     getOrderByDate();
-  }, [dateValueStart, dateValueEnd]);
+  }, [selectedDate, type]);
 
   useEffect(() => {
     if (orderByDate.length > 0) {
-      console.log("dasdasd");
-      setTotalRevenueByDate(orderByDate.reduce(myFunc));
-    } else if (orderByDate.length == []) {
-      setTotalRevenueByDate(0);
+      setTotalRevenue(orderByDate.reduce(myFunc));
+      setAmountPaidToAdmin((orderByDate.reduce(myFunc) * 20) / 100);
+    } else {
+      setTotalRevenue(0);
+      setAmountPaidToAdmin(0);
     }
   }, [orderByDate]);
 
@@ -45,47 +76,34 @@ function Revenue({ route }) {
   }
 
   return (
-    <View style = {{margin : 20}}>
-      <View style={styles.inputView}>
-        <Text style={styles.lable}>Từ ngày : </Text>
-        <TextInput
-          style={styles.input}
-          onChangeText={setDateValueStart}
-          value={dateValueStart}
-          placeholder="dd-mm-yyyy"
-          keyboardType="numeric"
-          cursorColor = "red"
-        ></TextInput>
-      </View>
+    <View>
+      <Calendar title="Xem doanh thu : " callback={callback} />
 
-      <View style={styles.inputView}>
-        <Text style={styles.lable}>Đến ngày : </Text>
-        <TextInput
-          style={styles.input}
-          onChangeText={setDateValueEnd}
-          value={dateValueEnd}
-          placeholder="dd-mm-yyyy"
-          keyboardType="numeric"
-          cursorColor = "red"
-        ></TextInput>
+      <View className="p-3">
+        <View className="flex flex-row justify-between">
+          <Text className="text-base">Tổng doanh thu</Text>
+          <Text className="text-base text-red-600 font-bold">
+            {formatCash(totalRevenue + "")} đ
+          </Text>
+        </View>
+        <View className="flex flex-row justify-between">
+          <Text className="text-base">Số đơn hàng trên Freen'tship</Text>
+          <Text className="text-base ">{allOrderByDate.length}</Text>
+        </View>
+        <View className="flex flex-row justify-between">
+          <Text className="text-base">Số đơn hoàn thành</Text>
+          <Text className="text-base ">{orderByDate.length}</Text>
+        </View>
+
+        <View className="flex flex-row justify-between">
+          <Text className="text-base">Hoa hồng cho Freen'tship(20%)</Text>
+          <Text className="text-base text-red-600 font-bold">
+            {formatCash(amountPaidToAdmin + "")} đ
+          </Text>
+        </View>
       </View>
-      <Text style = {{fontWeight: "bold", fontSize: 16}}>Số tiền  bán được :  {formatCash(totalRevenueByDate + '')} vnd </Text>
-      <Text style = {{fontWeight: "bold", fontSize: 16}}>Số đơn hàng bán được :  {orderByDate.length} đơn </Text>
     </View>
   );
-}
-export default Revenue;
+};
 
-const styles = StyleSheet.create({
-  inputView: { flexDirection: "row", alignItems: "center" },
-  lable: { fontWeight: "bold", fontSize: 16, flex : 1 },
-  input: {
-    flex : 3 ,
-    height: 20,
-    margin: 12,
-    boderRadius: 10 ,
-    borderColor: "red",
-    backgroundColor: "#fff",
-    padding: 10,
-  },
-});
+export default Revenue;

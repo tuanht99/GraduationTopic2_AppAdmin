@@ -21,11 +21,12 @@ function DetailStore({ navigation, route }) {
   const { id } = route.params;
   const [store, setStore] = useState([]);
   const [order, setOrder] = useState([]);
+  const [orderSuccess, setOrderSuccess] = useState([]);
   const [totalPrice, setTotalPrice] = useState([]);
   const [totalRevenue, setTotalRevenue] = useState(0);
   const [amountPaidToAdmin, setAmountPaidToAdmin] = useState(0);
 
-  // console.log("order", totalRevenueByDate);
+  console.log("order", orderSuccess);
   // console.log("orderByDate", orderByDate);
   useEffect(() => {
     GetDetailStore(id)
@@ -39,14 +40,24 @@ function DetailStore({ navigation, route }) {
   }, []);
 
   useEffect(() => {
-    const a = order.map((i) => i.total_food);
-    setTotalPrice(a);
+    if (order.length > 0) {
+      setOrderSuccess([]);
+      order.map((i) => {
+        if (i.status === 5) {
+          setOrderSuccess((prev) => [...prev, i]);
+        }
+      });
+    }
   }, [order]);
+  useEffect(() => {
+    const a = orderSuccess.map((i) => i.total_food);
+    setTotalPrice(a);
+  }, [orderSuccess]);
 
   useEffect(() => {
     if (totalPrice.length > 0) {
       setTotalRevenue(totalPrice.reduce(myFunc));
-      setAmountPaidToAdmin(totalPrice.reduce(myFunc) *10 / 100);
+      setAmountPaidToAdmin((totalPrice.reduce(myFunc) * 20) / 100);
     }
   }, [totalPrice]);
 
@@ -116,19 +127,19 @@ function DetailStore({ navigation, route }) {
       <View key={index}>
         <StoreInfo store={store} />
         <Text style={[styles.phoneStore, styles.infoStore]}>
-          Tổng đơn hàng đã bán : {order.length} đơn hàng
+          Tổng đơn hàng đã bán : {} đơn hàng
         </Text>
         <Text style={[styles.phoneStore, styles.infoStore]}>
           Tổng doanh thu : {formatCash(totalRevenue + "")} vnd
         </Text>
 
         <Text style={[styles.phoneStore, styles.infoStore]}>
-          Tiền mà cửa hàng phải trả  : {formatCash(amountPaidToAdmin + "")} vnd
+          Tiền mà cửa hàng phải trả : {formatCash(amountPaidToAdmin + "")} vnd
         </Text>
 
         <TouchableOpacity
           style={styles.btnRevenueByDate}
-          onPress={() => navigation.navigate("Revenue", { order: order })}
+          onPress={() => navigation.navigate("Revenue", { orderInfo: order })}
         >
           <Text style={{ color: "#fff", fontWeight: "bold", marginRight: 20 }}>
             Xem doanh thu theo ngày
@@ -153,9 +164,11 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
     fontWeight: "bold",
   },
+
   phoneStore: {
     fontSize: 17,
     marginRight: 20,
+    marginBottom: 10
   },
   viewPhone: {
     flexDirection: "row",
@@ -179,6 +192,6 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     marginHorizontal: 50,
     height: 40,
-    marginTop : 50
+    marginTop: 50,
   },
 });
