@@ -54,3 +54,43 @@ export async function GetDetailUserShipper(id) {
   }
   return Users;
 }
+// phân loại
+export async function GetAllUser() {
+  const allUser = [];
+  const q = query(collection(db, "users"), where("loai", "==", "1"));
+
+  const querySnapshot = await getDocs(q);
+  querySnapshot.forEach((doc) => {
+    // doc.data() is never undefined for query doc snapshots
+    allUser.push({id: doc.id, ...doc.data() });
+    console.log(doc.id, " => ", doc.data());
+  });
+  
+  return allUser;
+}
+export async function GetAllUserShipper() {
+  const allUser = [];
+  const q = query(collection(db, "users"), where("loai", "==", "3"));
+
+  const querySnapshot = await getDocs(q);
+  querySnapshot.forEach((doc) => {
+    // doc.data() is never undefined for query doc snapshots
+    allUser.push({id: doc.id, ...doc.data() });
+    console.log(doc.id, " => ", doc.data());
+  });
+  
+  return allUser;
+}
+export async function GetAllUserStore() {
+  const allUser = [];
+  const q = query(collection(db, "users"), where("loai", "==", "2"));
+
+  const querySnapshot = await getDocs(q);
+  querySnapshot.forEach((doc) => {
+    // doc.data() is never undefined for query doc snapshots
+    allUser.push({id: doc.id, ...doc.data() });
+    console.log(doc.id, " => ", doc.data());
+  });
+  
+  return allUser;
+}

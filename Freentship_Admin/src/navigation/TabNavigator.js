@@ -27,7 +27,11 @@ export default function TabNavigator() {
           component={Storez}
           options={{ tabBarLabel: "Cửa Hàng" }}
         />
-       
+         <Tabs.Screen
+          name="Shipper"
+          component={Shipper}
+          options={{ tabBarLabel: "Shipper" }}
+        />
       </Tabs.Navigator>
   );
 }

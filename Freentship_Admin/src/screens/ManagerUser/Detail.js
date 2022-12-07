@@ -6,65 +6,57 @@ import {
   Switch,
   TouchableOpacity,
   Alert,
+  ScrollView
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { BottomNavigation } from "react-native-paper";
 import { GetDetailUser } from "../../services";
 import { doc, onSnapshot, updateDoc } from "firebase/firestore";
 import { db } from "../../services";
-
+import { FontAwesome5 } from '@expo/vector-icons'
+import { AntDesign } from '@expo/vector-icons'
+import {ToastAndroid} from 'react-native' ;
 export default function Detail({ navigation, route }) {
   const { id } = route.params;
   const [User, setUser] = useState([]);
-  const avatar = User.avatar;
-  const UserName = User.name;
-  const email = User.email;
-  const dateOfBirth = User.dateOfBirth;
-  const sex = User.sex;
-  const address = User.address;
-  const statusUser = User.status;
-  const phone = User.phone;
+  
+
   useEffect(() => {
     const unsub = onSnapshot(doc(db, "users", id), (doc) => {
       console.log("Current data: ", doc.data());
       setUser(doc.data());
     });
   }, [id]);
-  // switch
-  const [isEnabled, setIsEnabled] = useState(false);
-  const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
-  // function active() {
-  //   updateDoc(doc(db, "users", id), {
-  //     name: UserName,
-  //     dateOfBirth: dateOfBirth,
-  //     avatar: avatar,
-  //     sex: sex,
-  //     email: email,
-  //     phone: phone,
-  //     address: address,
-  //     status: 1,
-  //   });
-  // }
-  // function block() {
-  //   updateDoc(doc(db, "users", id), {
-  //     name: UserName,
-  //     dateOfBirth: dateOfBirth,
-  //     avatar: avatar,
-  //     sex: sex,
-  //     email: email,
-  //     phone: phone,
-  //     address: address,
-  //     status: 2,
-  //   });
-  //   // Alert.alert(
-  //   //   "Thông báo",
-  //   //   "Thay đổi Trạng thái thành công",
-  //   //   [
 
-  //   //     { text: "OK" }
-  //   //   ]
-  //   // )
-  // }
+  // switch
+  const [isEnabled, setIsEnabled] = useState();
+  const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
+  const active = async () => {
+    if (id !== '') {
+      const isActive = doc(db, 'users', id)
+      await updateDoc(isActive, {
+        status: 1,
+      })
+    }
+   
+  }
+  const block = async () => {
+    if (id !== '') {
+      const isActive = doc(db, 'users', id)
+      await updateDoc(isActive, {
+        status: 2,
+      })
+    }
+  }
+
+  useEffect(() => {
+    if (isEnabled === true) {
+      active();
+    } else if (isEnabled === false) {
+      block();
+    }
+  }, [isEnabled]);
+
   useEffect(() => {
     if (User.status === 1) {
       setIsEnabled(true);
@@ -72,41 +64,16 @@ export default function Detail({ navigation, route }) {
       setIsEnabled(false);
     }
   }, [User]);
-
  
   //  updateDoc
 
-  console.log(id);
-  console.log(User);
-  if (isEnabled == true) {
-    updateDoc(doc(db, "users",id), {
-      name: UserName,
-      dateOfBirth: dateOfBirth,
-      avatar: avatar,
-      sex: sex,
-      email: email,
-      phone: phone,
-      address: address,
-      status: 1,
-    });
-  } else if (isEnabled === false) {
-    updateDoc(doc(db, "users",id), {
-      name: UserName,
-      dateOfBirth: dateOfBirth,
-      avatar: avatar,
-      sex: sex,
-      email: email,
-      phone: phone,
-      address: address,
-      status: 2,
-    });
-  }
+  
   return (
     <View style={styles.container}>
       {/* header */}
       <View style={styles.header}>
         <View style={styles.headercontent}>
-          <Image style={styles.imgUser} source={{ uri: avatar }} />
+          <Image style={styles.imgUser} source={{ uri: User.avatar }} />
         </View>
         {/* switch */}
         <View style={styles.headercontent2}>
@@ -123,7 +90,8 @@ export default function Detail({ navigation, route }) {
         </View>
       </View>
       {/* end */}
-      <View style={styles.content}>
+   
+    <View style={styles.content}>
         <View style={styles.Profile}>
           {/* nút thay đổi */}
           <View style={{ flexDirection: "row", paddingBottom: 20 }}>
@@ -157,15 +125,74 @@ export default function Detail({ navigation, route }) {
             <Text style={{ fontSize: 25, color: "red" }}>địa chỉ:</Text>
             <Text style={{ fontSize: 25 }}>{User.address}</Text>
           </View>
+          <View style={{ backgroundColor: "black", flex: 0.01 }}></View>
+       
+          <View style={{ flexDirection: "row", flex: 1, alignItems: "center" }}>
+         
+           <Text style={{ fontSize: 25, color: "red" }}>CCCD:</Text>
+            {User.CCCD != null ? (
+              <TouchableOpacity 
+           onPress={() =>
+                    navigation.navigate('DetailCCCD', {
+                      CCCD :User.CCCD,
+                      Centizen: User.citizenID,
+                    })
+                  }
+          style={{ flexDirection: "row", flex: 1, alignItems: "center" }}>
+              <Text
+                style={{
+                  fontSize: 20,
+                  paddingLeft:100,
+                  color: "#90EE90",
+                  fontWeight: "bold",
+                }}
+              >
+              đã có
+              </Text>
+               <AntDesign name="right" style={{
+               fontSize:25,
+    marginLeft: 130,
+    marginRight: 10,
+    color: "black"
+            }} />
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity onPress={ ToastAndroid.show(
+                'Người dùng chưa Xác Minh CCCD!',
+                ToastAndroid.SHORT
+              )}  style={{ flexDirection: "row", flex: 1, alignItems: "center" }}>
+              <Text
+                style={{
+                  fontSize: 20,
+                  justifyContent: "center",
+                  color: "#DC143C",
+                  paddingLeft:80,
+                }}
+              >
+              Chưa xác nhận
+              </Text>
+              <AntDesign name="right" style={{
+               fontSize:25,
+    marginLeft: 50,
+
+    marginRight: 10,
+    color: "black"
+            }} />
+              </TouchableOpacity>
+            ) }
+           
+          </View>
+       
         </View>
       </View>
+   
     </View>
   );
 }
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#00FFFF",
+ 
   },
 
   header: {
@@ -173,7 +200,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   content: {
-    flex: 10,
+    flex: 8,
   },
 
   bottom: {
@@ -182,7 +209,7 @@ const styles = StyleSheet.create({
   imgUser: {
     flex: 1,
 
-    borderRadius: 10,
+    borderRadius: 100,
   },
   headercontent: {
     flex: 2,

@@ -8,7 +8,9 @@ import { DetailStore } from "../screens/DetailStore";
 import Revenue from "../screens/Revenue"
 import BottomTab from "./BottomTab";
 import Manage from "../screens/ManagerUser/Manage";
-import Detail from "../screens/ManagerUser/Detai";
+import Detail from "../screens/ManagerUser/Detail";
+import DetailShipper  from "../screens/ManagerUser/DetailShipper";
+import DetailCCCD from "../screens/ManagerUser/DetailCCCD"
 const Stack = createNativeStackNavigator();
 
 function Navigation() {
@@ -21,6 +23,8 @@ function Navigation() {
         <Stack.Screen name="DetailStore" component={DetailStore} />
         <Stack.Screen name="Revenue" component={Revenue} />
         <Stack.Screen name="Detail" component={Detail} />
+        <Stack.Screen name="DetailShipper" component={DetailShipper} />
+        <Stack.Screen name="DetailCCCD" component={DetailCCCD} />
 
       </Stack.Navigator>
     </NavigationContainer>
