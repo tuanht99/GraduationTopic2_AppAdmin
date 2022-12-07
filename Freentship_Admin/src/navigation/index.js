@@ -11,6 +11,8 @@ import Manage from "../screens/ManagerUser/Manage";
 import Detail from "../screens/ManagerUser/Detail";
 import DetailShipper  from "../screens/ManagerUser/DetailShipper";
 import DetailCCCD from "../screens/ManagerUser/DetailCCCD"
+import Notification from "../screens/Notiification/Notification";
+
 const Stack = createNativeStackNavigator();
 
 function Navigation() {
@@ -25,6 +27,8 @@ function Navigation() {
         <Stack.Screen name="Detail" component={Detail} />
         <Stack.Screen name="DetailShipper" component={DetailShipper} />
         <Stack.Screen name="DetailCCCD" component={DetailCCCD} />
+        <Stack.Screen name="Notifications" component={Notification} />
+
 
       </Stack.Navigator>
     </NavigationContainer>

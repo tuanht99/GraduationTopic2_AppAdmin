@@ -4,32 +4,36 @@ import {
   FlatList,
   StyleSheet,
   TouchableOpacity,
+  Button,
+  Image
 } from "react-native";
 import React from "react";
-import { GetAllUser } from "../../services";
+import { GetVourcher } from "../../services";
 import { useState, useEffect } from "react";
 import { TextInput } from "react-native";
+import Header from "../../components/Layout/components/Header";
+import { AntDesign } from "@expo/vector-icons";
 
-export default function KhachHang({ navigation }) {
+export default function ManagerNotify({ navigation }) {
   const [textInputValue, setTextInputValue] = React.useState("");
 
   const [ListUser, setList] = useState([]);
   const [masterData, setMasterData] = useState([]);
 
   useEffect(() => {
-    GetAllUser()
+    GetVourcher()
       .then((data) => {
         setList(data);
         setMasterData(data);
       })
       .catch((err) => console.log("error =>", err));
   }, []);
-
+console.log(ListUser);
   const searchFitter = (text) => {
     if (text) {
       const newData = masterData.filter((item) => {
-        console.log(item.phone);
-        const itemData = item.phone;
+        console.log(item.ten);
+        const itemData = item.ten;
         const textData = text.toUpperCase();
         return itemData.indexOf(textData) > -1;
       });
@@ -43,38 +47,18 @@ export default function KhachHang({ navigation }) {
 
   const Item = ({ item }) => (
     <View style={styles.item}>
-      <View style={{ marginBottom: 20, backgroundColor: "#fff" }}>
+      <View style={{ marginBottom: 50, backgroundColor: "#fff",flex:1 ,flexDirection:"row"}}>
+      {/* <AntDesign style={{ marginRight:30}} name="fa-sharp" size={24} color="black" /> */}
+    <Image style={{height:30,width:30,marginRight:5}} source={require("../../../assets/coupon.png")}></Image>
         <TouchableOpacity
-          onPress={() => navigation.navigate("Detail", { id: item.id })}
-          style={{ flexDirection: "row" }}
+        
+          style={{ flexDirection: "column" }}
         >
           <View style={{ flex: 3 }}>
-            <Text style={{ fontSize: 20 }}>{item.phone}</Text>
+            <Text style={{ fontSize: 20 }}>{item.ten}</Text>
           </View>
-          <View style={{ flex: 1 }}>
-            {item.status === 1 ? (
-              <Text
-                style={{
-                  fontSize: 20,
-
-                  color: "#90EE90",
-                  fontWeight: "bold",
-                }}
-              >
-                hoạt động
-              </Text>
-            ) : item.status === 2 ? (
-              <Text
-                style={{
-                  fontSize: 20,
-                  justifyContent: "center",
-                  color: "#DC143C",
-                }}
-              >
-              đã khóa
-              </Text>
-            ) : null}
-          </View>
+         
+      
         </TouchableOpacity>
       </View>
     </View>
@@ -87,8 +71,16 @@ export default function KhachHang({ navigation }) {
   );
   return (
     <View style={{ flex: 1, backgroundColor: "white" }}>
+      <Header />
       {/* view input */}
-      <View style={{ flex: 1, backgroundColor: "White", margin: 10 }}>
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: "White",
+          margin: 10,
+          flexDirection: "row",
+        }}
+      >
         <TextInput
           style={{
             height: 40,
@@ -97,12 +89,36 @@ export default function KhachHang({ navigation }) {
             placeholderTextColor: "gray",
             fontWeight: "bold",
             margin: 10,
+            flex: 3,
           }}
           onChangeText={(text) => searchFitter(text)}
           value={textInputValue}
-          underlineColorAndroid="transparent"
-          placeholder="Nhập tên Tài Khoản!"
+          placeholder="Nhập Mã Vourcher"
         />
+        <TouchableOpacity
+         onPress={() =>  {
+           
+            console.log( navigation.navigate("Notifications"))
+         }}
+          style={{
+            backgroundColor: "red",
+            justifyContent: "center",
+            flex: 1,
+            borderRadius: 15,
+          }}
+        >
+          <Text
+            style={{
+              justifyContent: "center",
+              flex: 1,
+              alignSelf: "center",
+              paddingTop: 20,
+            }}
+          >
+            {" "}
+            Thêm
+          </Text>
+        </TouchableOpacity>
       </View>
       {/* end view input */}
       {/* View platlist */}
@@ -122,18 +138,16 @@ export default function KhachHang({ navigation }) {
             UserName:
           </Text>
         </View>
-        <View style={{ flex: 1.5, padding: 10 }}>
-          <Text style={{ fontSize: 20 }}>Trạng Thái:</Text>
-        </View>
+       
       </View>
 
       <View style={{ flex: 9, margin: 10 }}>
         <FlatList
-          style={{ padding: 10 }}
-          data={ListUser}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.id}
-        />
+            style={{ padding: 10 }}
+            data={ListUser}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.id}
+          />
       </View>
     </View>
   );
