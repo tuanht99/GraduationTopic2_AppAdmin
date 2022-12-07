@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "846127148037",
+    "project_id": "freentship",
+    "storage_bucket": "freentship.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:846127148037:android:3dbf919cc0f43c3991c06c",
+        "android_client_info": {
+          "package_name": "com.dzerok.Freentship"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "846127148037-0ihtovf2dle9st7279s1ngqvpnikdtdm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDciHSvMaMxvLrUhcIGeQoHNWph2ankXgE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "846127148037-0ihtovf2dle9st7279s1ngqvpnikdtdm.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "846127148037-ii554crra7ocndu6d8d1fcbdufumlmn5.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.dzerok.Freentship"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
