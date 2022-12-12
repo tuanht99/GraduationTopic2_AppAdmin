@@ -10,8 +10,8 @@ import Shipper from "../screens/ManagerUser/Shipper";
 import  Storez  from "../screens/ManagerUser/Stores";
 import KhachHang from "../screens/ManagerUser/KhachHang"
 import { Stores } from "../screens/Stores";
-import ManagerNotify from "../screens/Notiification/NotificationManager";
-import ManagerAdminView from "../screens/Notiification/ManagerAdminView";
+import Coupons from "../screens/Vourcher/Coupons";
+import ManagerAdminView from "../screens/Vourcher/ManagerAdminView";
 export default function BottomTab() {
   return (
     <Tab.Navigator 
@@ -53,8 +53,8 @@ export default function BottomTab() {
         }}
       />
       <Tab.Screen
-        name="Notification"
-        component={ManagerNotify} // Search Screen
+        name="Coupons"
+        component={Coupons} // Search Screen
         options={{
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons

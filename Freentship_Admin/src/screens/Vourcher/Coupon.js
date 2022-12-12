@@ -6,7 +6,7 @@ import { TextInput } from 'react-native-paper';
 import { useState } from 'react';
 import { addVourcher } from "../../services";
 
-function Notification ({navigation,route}) {
+function CouponAdd ({navigation,route}) {
   const [Ten, setTen] = useState("");
   const [Gia, setGia] = useState();
   const [Mota, setMota] = useState("")
@@ -47,6 +47,7 @@ function Notification ({navigation,route}) {
                   borderColor: "#E94730",
                   borderRadius: 5,
                 }}
+                placeholder={'Tên Coupon '}
                 onChangeText={(Ten) => setTen(Ten)}
                 value={Ten}
               ></TextInput>
@@ -171,4 +172,4 @@ function Notification ({navigation,route}) {
   )
 }
 
-export default Notification
+export default CouponAdd

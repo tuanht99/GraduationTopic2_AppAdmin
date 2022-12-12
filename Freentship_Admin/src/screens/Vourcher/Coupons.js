@@ -14,7 +14,7 @@ import { TextInput } from "react-native";
 import Header from "../../components/Layout/components/Header";
 import { AntDesign } from "@expo/vector-icons";
 
-export default function ManagerNotify({ navigation }) {
+export default function Coupons({ navigation }) {
   const [textInputValue, setTextInputValue] = React.useState("");
 
   const [ListUser, setList] = useState([]);
@@ -98,7 +98,7 @@ console.log(ListUser);
         <TouchableOpacity
          onPress={() =>  {
            
-            console.log( navigation.navigate("Notifications"))
+            console.log( navigation.navigate("Coupon"))
          }}
           style={{
             backgroundColor: "red",
@@ -135,7 +135,7 @@ console.log(ListUser);
               paddingLeft: 10,
             }}
           >
-            UserName:
+           Tên khuyến mãi:
           </Text>
         </View>
        
