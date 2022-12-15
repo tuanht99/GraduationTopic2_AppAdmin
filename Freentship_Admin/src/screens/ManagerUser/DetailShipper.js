@@ -124,6 +124,18 @@ console.log(id);
             <Text style={{ fontSize: 25, color: "red" }}>địa chỉ:</Text>
             <Text style={{ fontSize: 25 }}>{User.address}</Text>
           </View>
+          <View style={{ backgroundColor: "black", flex: 0.01 }}></View>
+
+          <View style={{ flexDirection: "row", flex: 1, alignItems: "center" }}>
+          <TouchableOpacity onPress={()=>{
+
+navigation.navigate("Xe",
+{ id})
+          }}>
+            <Text style={{ fontSize: 25, color: "red" }}>Xe:</Text>
+            <Text style={{ fontSize: 25 }}>{User.address}</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     </View>

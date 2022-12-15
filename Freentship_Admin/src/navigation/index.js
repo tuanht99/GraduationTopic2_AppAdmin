@@ -12,7 +12,7 @@ import Detail from "../screens/ManagerUser/Detail";
 import DetailShipper  from "../screens/ManagerUser/DetailShipper";
 import DetailCCCD from "../screens/ManagerUser/DetailCCCD"
 import CouponAdd from "../screens/Vourcher/Coupon";
-
+import CarView from "../screens/ManagerUser/Xe"
 const Stack = createNativeStackNavigator();
 
 function Navigation() {
@@ -28,8 +28,7 @@ function Navigation() {
         <Stack.Screen name="DetailShipper" component={DetailShipper} />
         <Stack.Screen name="DetailCCCD" component={DetailCCCD} />
         <Stack.Screen name="Coupon" component={CouponAdd} />
-
-
+        <Stack.Screen name="Xe" component={CarView} />
       </Stack.Navigator>
     </NavigationContainer>
   );

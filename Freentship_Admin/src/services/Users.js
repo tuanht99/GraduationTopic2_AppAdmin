@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { Alert, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { db } from "./firebase";
 import {
@@ -8,7 +8,8 @@ import {
   doc,
   getDoc,
   onSnapshot,
-  where
+  where,
+  updateDoc
 } from "firebase/firestore"; 
 
 export  async function GetListUser() {
@@ -93,4 +94,19 @@ export async function GetAllUserStore() {
   });
   
   return allUser;
+}
+export async function addVehicleNumber(id,bienso) {
+  updateDoc(doc(db, 'users', id), {
+    
+    loaixe: bienso,
+  }
+   
+  ).catch(error => {
+   
+    console.log(error)
+    Alert.alert('Thông báo', 'Thêm thất bại', [{ text: 'OK' }])
+  }
+  )
+  Alert.alert('Thông báo', 'Thêm thành công', [{ text: 'OK' }])
+
 }
