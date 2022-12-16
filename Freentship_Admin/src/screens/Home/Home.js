@@ -1,4 +1,4 @@
-import { View, Text , Alert } from "react-native";
+import { View, Text, Alert } from "react-native";
 import React, { useEffect, useState } from "react";
 import Header from "../../components/Layout/components/Header";
 import { format } from 'date-fns';
@@ -57,19 +57,19 @@ import { format } from 'date-fns';
 //   }, []);
 // }
 
-const Home = () => {  
+const Home = () => {
   const todaya = new Date('2022-11-07');
   const todayb = new Date('2022-04-26');
 
   const c = todaya - todayb
   //  const seconds = Math.round(today.getTime()/1000)
-  const date = new Date(c/1000);
-  console.log('adsad' , typeof(c))
+  const date = new Date(c / 1000);
+  console.log('adsad', typeof (c))
 
   return (
     <View>
       <Header />
-      <Text> FCM Tutorial : {date.toString()} </Text>
+      <Text> Homepage </Text>
     </View>
   );
 };

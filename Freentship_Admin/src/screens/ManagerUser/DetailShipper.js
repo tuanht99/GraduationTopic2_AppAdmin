@@ -7,18 +7,20 @@ import {
   TouchableOpacity,
   Alert,
   Button,
-  
+  ToastAndroid,
+
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { BottomNavigation } from "react-native-paper";
 import { GetDetailUser } from "../../services";
 import { doc, onSnapshot, updateDoc } from "firebase/firestore";
 import { db } from "../../services";
+import { AntDesign } from "@expo/vector-icons";
 
 export default function Detail({ navigation, route }) {
   const { id } = route.params;
   const [User, setUser] = useState([]);
-console.log(id);
+  console.log(id);
   useEffect(() => {
     const unsub = onSnapshot(doc(db, "users", id), (doc) => {
       console.log("Current data: ", doc.data());
@@ -47,21 +49,21 @@ console.log(id);
     }
   };
 
-//   useEffect(() => {
-//     if (isEnabled === true) {
-//       active();
-//     } else if (isEnabled === false) {
-//       block();
-//     }
-//   }, [isEnabled]);
+  //   useEffect(() => {
+  //     if (isEnabled === true) {
+  //       active();
+  //     } else if (isEnabled === false) {
+  //       block();
+  //     }
+  //   }, [isEnabled]);
 
-//   useEffect(() => {
-//     if (User.status === 1) {
-//       setIsEnabled(true);
-//     } else if (User.status === 2) {
-//       setIsEnabled(false);
-//     }
-//   }, [User]);
+  //   useEffect(() => {
+  //     if (User.status === 1) {
+  //       setIsEnabled(true);
+  //     } else if (User.status === 2) {
+  //       setIsEnabled(false);
+  //     }
+  //   }, [User]);
 
   //  updateDoc
 
@@ -74,20 +76,20 @@ console.log(id);
         </View>
         {/* switch */}
         <View style={styles.headercontent2}>
-          <Text style={{ fontSize: 15, color: "red" , marginBottom:30}}>
+          <Text style={{ fontSize: 15, color: "red", marginBottom: 30 }}>
             Thay đổi trạng thái
           </Text>
-         <View style={{flexDirection:"row" , margin:10}}>
-       <TouchableOpacity onPress={block} style={{ backgroundColor:"#DC143C",color:"#fff",margin:10 }}>
-        <Text> Khóa</Text>
-       </TouchableOpacity>
-       <TouchableOpacity onPress={active} style={{ backgroundColor:"#90EE90",color:"#fff",margin:10}}>
-        <Text> xác nhận</Text>
-       </TouchableOpacity>
-         </View>
+          <View style={{ flexDirection: "row", margin: 10 }}>
+            <TouchableOpacity onPress={block} style={{ backgroundColor: "#DC143C", color: "#fff", margin: 10 }}>
+              <Text> Khóa</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={active} style={{ backgroundColor: "#90EE90", color: "#fff", margin: 10 }}>
+              <Text> xác nhận</Text>
+            </TouchableOpacity>
+          </View>
         </View>
-       
-     
+
+
       </View>
       {/* end */}
       <View style={styles.content}>
@@ -125,15 +127,69 @@ console.log(id);
             <Text style={{ fontSize: 25 }}>{User.address}</Text>
           </View>
           <View style={{ backgroundColor: "black", flex: 0.01 }}></View>
-
           <View style={{ flexDirection: "row", flex: 1, alignItems: "center" }}>
-          <TouchableOpacity onPress={()=>{
 
-navigation.navigate("Xe",
-{ id})
-          }}>
-            <Text style={{ fontSize: 25, color: "red" }}>Xe:</Text>
-            <Text style={{ fontSize: 25 }}>{User.address}</Text>
+            <Text style={{ fontSize: 25, color: "red" }}>CCCD:</Text>
+            {User.CCCD != null ? (
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate('DetailCCCD', {
+                    CCCD: User.CCCD,
+                    Centizen: User.citizenID,
+                  })
+                }
+                style={{ flexDirection: "row", flex: 1, alignItems: "center" }}>
+                <Text
+                  style={{
+                    fontSize: 20,
+                    paddingLeft: 100,
+                    color: "#90EE90",
+                    fontWeight: "bold",
+                  }}
+                >
+                  đã có
+                </Text>
+                <AntDesign name="right" style={{
+                  fontSize: 25,
+                  marginLeft: 130,
+                  marginRight: 10,
+                  color: "black"
+                }} />
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity onPress={ToastAndroid.show(
+                'Người dùng chưa Xác Minh CCCD!',
+                ToastAndroid.SHORT
+              )} style={{ flexDirection: "row", flex: 1, alignItems: "center" }}>
+                <Text
+                  style={{
+                    fontSize: 20,
+                    justifyContent: "center",
+                    color: "#DC143C",
+                    paddingLeft: 80,
+                  }}
+                >
+                  Chưa xác nhận
+                </Text>
+                <AntDesign name="right" style={{
+                  fontSize: 25,
+                  marginLeft: 50,
+
+                  marginRight: 10,
+                  color: "black"
+                }} />
+              </TouchableOpacity>
+            )}
+
+          </View>
+          <View style={{ flexDirection: "row", flex: 1, alignItems: "center" }}>
+            <TouchableOpacity onPress={() => {
+
+              navigation.navigate("Xe",
+                { id })
+            }}>
+              <Text style={{ fontSize: 25, color: "red" }}>Xe:</Text>
+              <Text style={{ fontSize: 25 }}>{User.address}</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -144,7 +200,7 @@ navigation.navigate("Xe",
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-   
+
   },
 
   header: {
@@ -170,7 +226,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    flexDirection:"column"
+    flexDirection: "column"
   },
   Profile: {
     margin: 5,
