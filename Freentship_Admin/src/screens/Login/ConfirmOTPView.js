@@ -23,10 +23,10 @@ if (!app?.options || Platform.OS === 'web') {
   )
 }
 
-export function ConfirmOTP({ navigation, route }) {
+export default function ConfirmOTP({ navigation, route }) {
   // Ref or state management hooks
   const recaptchaVerifier = useRef(null)
-  const { phoneNumber,} =
+  const { phoneNumber, } =
     route.params
 
   const [verificationId, setVerificationId] = useState()
@@ -65,7 +65,7 @@ export function ConfirmOTP({ navigation, route }) {
       <FirebaseRecaptchaVerifierModal
         ref={recaptchaVerifier}
         firebaseConfig={app.options}
-        // attemptInvisibleVerification
+      // attemptInvisibleVerification
       />
       <Text style={{ marginTop: 20 }}>Enter Verification code</Text>
       <TextInput
@@ -86,9 +86,8 @@ export function ConfirmOTP({ navigation, route }) {
             await signInWithCredential(auth, credential)
             showMessage({ text: 'Phone authentication successful 👍' })
             navigation.navigate(
-              'Home',
-           
-             )
+              'BottomTab',
+            )
           } catch (err) {
             showMessage({ text: `Error: ${err.message}`, color: 'red' })
             goBack()
