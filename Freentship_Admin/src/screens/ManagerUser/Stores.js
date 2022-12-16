@@ -45,7 +45,7 @@ export default function Shipper({ navigation }) {
     <View>
       <View style={{ marginBottom: 20, backgroundColor: "#fff" }}>
         <TouchableOpacity
-          onPress={() => navigation.navigate("DetailShipper", { id: item.id })}
+          onPress={() => navigation.navigate("DetailStores", { id: item.id })}
           style={{ flexDirection: "row" }}
         >
           <View style={{ flex: 3 }}>
@@ -71,17 +71,17 @@ export default function Shipper({ navigation }) {
                   color: "#DC143C",
                 }}
               >
-             đã khóa
+                đã khóa
               </Text>
-            ) :    <Text
-                style={{
-                  fontSize: 20,
-                  justifyContent: "center",
-                  color: "#DC143C",
-                }}
-              >
-             chưa đăng kí kinh doanh
-              </Text>}
+            ) : <Text
+              style={{
+                fontSize: 20,
+                justifyContent: "center",
+                color: "#DC143C",
+              }}
+            >
+              chưa đăng kí kinh doanh
+            </Text>}
           </View>
         </TouchableOpacity>
       </View>

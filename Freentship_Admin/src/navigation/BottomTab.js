@@ -4,17 +4,17 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import TabNavigator from "./TabNavigator";
 const Tab = createMaterialBottomTabNavigator();
-import  Home  from "../screens/Home/Home";
+import Home from "../screens/Home/Home";
 // import { Shippers } from "../screens/Shipper";
 import Shipper from "../screens/ManagerUser/Shipper";
-import  Storez  from "../screens/ManagerUser/Stores";
+import Storez from "../screens/ManagerUser/Stores";
 import KhachHang from "../screens/ManagerUser/KhachHang"
 import { Stores } from "../screens/Stores";
 import Coupons from "../screens/Vourcher/Coupons";
 import ManagerAdminView from "../screens/Vourcher/ManagerAdminView";
 export default function BottomTab() {
   return (
-    <Tab.Navigator 
+    <Tab.Navigator
       labeled={false}
       barStyle={{ backgroundColor: "#E94730" }}
       activeColor="white"
@@ -65,7 +65,7 @@ export default function BottomTab() {
           ),
         }}
       />
-     
+
     </Tab.Navigator>
   );
 }
